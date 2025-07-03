@@ -15,7 +15,7 @@ SOURCES = $(wildcard $(SRCDIR)/*.c)
 OBJECTS = $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
 # Target executable
-TARGET = $(BINDIR)/snake
+TARGET = $(BINDIR)/main
 
 # Default target
 all: $(TARGET)

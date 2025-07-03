@@ -1,4 +1,3 @@
-#include "snake.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -7,7 +6,10 @@
 #include <unistd.h>
 #include <ncurses.h>
 
-void init_snake(snake* s){
-    s->x=malloc(8*sizeof(int));
-    s->y=malloc(8*sizeof(int));
+#include "snake.h"
+#include "grid.h"
+
+int main(){
+    draw_grid();
+    return EXIT_SUCCESS;
 }

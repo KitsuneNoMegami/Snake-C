@@ -10,6 +10,21 @@
 #include "grid.h"
 
 int main(){
-    draw_grid();
+    snake s;
+    //WINDOW *win;
+    init_snake(&s);
+    //## Test Adding positions ##//
+    add_position(&s,1,1);
+    add_position(&s,2,1);
+    add_position(&s,3,1);
+    add_position(&s,4,1);
+    printf("Taille :%d Capacité: %d",s.body,s.length);
+    for (int i=0;i<s.body;i++){
+        printf ("\nx: %d y: %d",s.x[i],s.y[i]);
+    }
+    printf("\n");
+    draw_grid(&s);
+    getch();               // On attend que l'utilisateur appui sur une touche pour quitter
+    endwin();
     return EXIT_SUCCESS;
 }

@@ -7,68 +7,50 @@
 #include <unistd.h>
 #include <ncurses.h>
 
-/**
- * Draw the grid of the game
- */
-int draw_grid(snake *s)
+
+int draw_grid(WINDOW *game, snake *s)
 {
-    initscr();
-    clear(); // Clear screen before drawing
+    wclear(game); // Clear screen before drawing
 
-    // Draw top border
-    for (int c = 0; c < WIDTH; c++)
-    {
-        printw("--");
-    }
-    printw("-\n");
+    // Redraw the border (since wclear removes it)
+    box(game, ACS_VLINE, ACS_HLINE);
 
-    // Draw grid content
-    for (int i = 0; i < HEIGHT; i++)
+    // Draw grid content (leave space for borders - start at 1,1 and end before borders)
+    for (int i = 1; i < HEIGHT - 1; i++)
     {
-        for (int j = 0; j < WIDTH + 1; j++)
+        for (int j = 1; j < WIDTH - 1; j++)
         {
-            bool snake_drawn = false;
-
-            // Check if this position contains snake
-            for (int cood = 0; cood < s->body; cood++)
-            {
-                if (s->y[cood] == i && s->x[cood] == j)
-                {
-                    if (cood == 0)
-                    {
-                        mvprintw(i + 1, j * 2, SNAKE_HEAD); // +1 for top border offset
-                    }
-                    else
-                    {
-                        mvprintw(i + 1, j * 2, SNAKE_BODY);
-                    }
-                    snake_drawn = true;
-                    break;
-                }
-            }
-
-            // Draw borders or empty space if no snake
-            if (!snake_drawn)
-            {
-                if (j == 0 || j == WIDTH)
-                {
-                    mvprintw(i + 1, j * 2, "|");
-                }
-                else
-                {
-                    mvprintw(i + 1, j * 2, ".");
-                }
-            }
+            mvwprintw(game, i, j, ".");
         }
     }
 
-    // Draw bottom border
-    move(HEIGHT + 1, 0);
-    for (int c = 0; c < WIDTH; c++)
+    // Draw snake positions
+    for (int i = 0; i < s->body; i++)
     {
-        printw("--");
+        // Make sure snake positions are within the bordered area
+        if (s->x[i] >= 1 && s->x[i] < WIDTH - 1 && s->y[i] >= 1 && s->y[i] < HEIGHT - 1)
+        {
+            mvwprintw(game, s->y[i], s->x[i], (i == 0) ? SNAKE_HEAD : SNAKE_BODY);
+        }
     }
-    printw("-\n");
-    refresh();
+
+    wrefresh(game);
+    return EXIT_SUCCESS;
+}
+
+int draw_rules(WINDOW *log)
+{
+    wclear(log);
+
+    // Redraw the border
+    box(log, ACS_VLINE, ACS_HLINE);
+
+    // Draw rules inside the border
+    mvwprintw(log, 1, 1, "Controls:");
+    mvwprintw(log, 2, 1, "Arrow keys to move");
+    mvwprintw(log, 3, 1, "q to quit");
+    mvwprintw(log, 4, 1, "Press any key to continue...");
+
+    wrefresh(log);
     return EXIT_SUCCESS;
 }

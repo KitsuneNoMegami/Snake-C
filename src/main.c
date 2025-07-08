@@ -20,9 +20,7 @@ int main()
     // printf("Press Enter to continue...\n");
     // getchar();
 
-    add_position(&s, 5, 5);
-    add_position(&s, 6, 5);
-    add_position(&s, 7, 5);
+    add_position(&s, s.x[0]+1, s.y[0]);
 
     // printf("After adding positions: body=%d\n", s.body);
     // for(int i = 0; i < s.body; i++) {
@@ -32,6 +30,9 @@ int main()
     // getchar();
 
     initscr();
+    noecho();           // Don't echo pressed keys
+    keypad(stdscr, TRUE); // Enable arrow keys
+    curs_set(0); 
     clear();
     refresh();
 
@@ -56,13 +57,21 @@ int main()
 
     draw_grid(game, &s);
     draw_rules(log);
-
-    int move=getch();
-    mvwprintw(log,5,1,"Key pressed: %c",move);
+    int key, gameOver;
+    while ((key = getch()) != 'q' && key != 'Q') {
+        // Move snake and redraw
+        gameOver=move_snake(key, &s);
+        draw_grid(game, &s);
+        if (gameOver){
+            draw_lose(game);
+            getch(); // Wait for user to press a key
+            break;
+        }
+        
+    }
     free_snake(&s);
     delwin(game); /* Effacer la fenêtre de jeu et libérer la mémoire et les informations de la structure de données de la fenêtre */
     delwin(log);
     endwin(); // On attend que l'utilisateur appui sur une touche pour quitter
     return EXIT_SUCCESS;
-
 }

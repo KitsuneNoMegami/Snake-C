@@ -46,11 +46,31 @@ int draw_rules(WINDOW *log)
     box(log, ACS_VLINE, ACS_HLINE);
 
     // Draw rules inside the border
-    mvwprintw(log, 1, 1, "Controls:");
-    mvwprintw(log, 2, 1, "Arrow keys to move");
-    mvwprintw(log, 3, 1, "q to quit");
-    mvwprintw(log, 4, 1, "Press any key to continue...");
+    mvwprintw(log, 1, 2, "Controls:");
+    mvwprintw(log, 2, 2, "Arrow keys to move : UP, DOWN, LEFT, RIGHT");
+    mvwprintw(log, 4, 2, "q to quit");
 
     wrefresh(log);
     return EXIT_SUCCESS;
+}
+
+void draw_lose(WINDOW *game){
+    wclear(game);
+    box(game, ACS_VLINE, ACS_HLINE);
+    
+    int center_y = HEIGHT / 2;
+    int center_x = WIDTH / 2;
+    
+    // Large text using multiple lines
+    mvwprintw(game, center_y - 4, center_x - 18, "################################");
+    mvwprintw(game, center_y - 3, center_x - 18, "#                              #");
+    mvwprintw(game, center_y - 2, center_x - 18, "#          G A M E             #");
+    mvwprintw(game, center_y - 1, center_x - 18, "#          O V E R             #");
+    mvwprintw(game, center_y,     center_x - 18, "#         You lose...          #");
+    mvwprintw(game, center_y + 1, center_x - 18, "#                              #");
+    mvwprintw(game, center_y + 2, center_x - 18, "#   Press any key to exit...   #");
+    mvwprintw(game, center_y + 3, center_x - 18, "#                              #");
+    mvwprintw(game, center_y + 4, center_x - 18, "################################");
+    
+    wrefresh(game);
 }

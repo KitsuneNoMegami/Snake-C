@@ -11,3 +11,5 @@ typedef struct snake
 void init_snake(snake *s);
 void free_snake(snake *s);
 void add_position(snake* s,int x, int y);
+int move_snake(int key, snake *s);
+void eat_apple(snake *s, int *apple);

@@ -19,3 +19,5 @@ int draw_grid(WINDOW *game, snake *s);
  * Draw the rules of the game 
  */
 int draw_rules(WINDOW *log);
+
+void draw_lose(WINDOW *game);

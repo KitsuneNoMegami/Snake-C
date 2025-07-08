@@ -16,6 +16,8 @@ void init_snake(snake *s)
     s->y = malloc(s->length * sizeof(int));
     s->x[0] = WIDTH / 2;
     s->y[0] = HEIGHT / 2;
+    s->score=0;
+    s->speed=0;
 }
 
 void free_snake(snake *s)
@@ -26,6 +28,14 @@ void free_snake(snake *s)
     s->y = NULL;
     s->body = 0;
     s->length = 0;
+}
+
+int snake_get_head_x(snake *s){
+    return s->x[0];
+}
+
+int snake_get_head_y(snake *s){
+    return s->y[0];
 }
 
 void add_position(snake *s, int x, int y)
@@ -112,14 +122,6 @@ int move_snake(int key, snake *s)
         }
         break;
     }
-
     return gameOver;
 }
 
-void eat_apple(snake *s, int *apple)
-{
-    if (s->x[0] == apple[0] && s->y[0] == apple[1])
-    {
-        add_position_end(s);
-    }
-}

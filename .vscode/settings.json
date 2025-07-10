@@ -1,8 +1,0 @@
-{
-  "files.associations": {
-    "types.h": "c",
-    "ncurses.h": "c",
-    "time.h": "c",
-    "snake.h": "c"
-  }
-}

@@ -23,5 +23,6 @@ void eat_apple(snake *s, int *apple)
             int new_timeout = (850 - s->speed) > 150 ? (850 - s->speed) : 150;
             timeout(new_timeout);
         }
+        
     }
 }

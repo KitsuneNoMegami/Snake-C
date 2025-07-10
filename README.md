@@ -35,7 +35,7 @@ A simple Snake game written in C.
 
 ## Controls
 
-- Use arrow keys (or WASD) to move the snake
+- Use arrow keys to move the snake
 - Try to eat the food and avoid crashing!
 
 ## License
